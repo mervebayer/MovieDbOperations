@@ -33,12 +33,17 @@ public class MoviesController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-         MovieDetailViewModel result;
-        GetByIdQuery query = new(context)
-        {
-            MovieId = id
-        };
-        result =query.Handle();
+        MovieDetailViewModel result;
+        try{
+            GetByIdQuery query = new(context)
+            {
+                MovieId = id
+            };
+            result =query.Handle();
+        }
+        catch(Exception ex){
+            return BadRequest(ex.Message);
+        }
         return Ok(result);    
     }
 
